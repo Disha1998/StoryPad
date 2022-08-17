@@ -1,6 +1,6 @@
 # StoryPad
 
- Storypad is a Token Gated community of Readers and Writers where writers can share their stories, charge fees to give access to a digital copy, and give special access to readers having their NFT membership.
+ ### Storypad is a Token Gated community of Readers and Writers where writers can share their stories, charge fees to give access to a digital copy, and give special access to readers having their NFT membership.
  
  
 
@@ -110,3 +110,4 @@ function createToken(string memory name, string memory symbol) public {
 
 ```
 
+WAGMI 🚀 
