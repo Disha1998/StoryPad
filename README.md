@@ -1,4 +1,11 @@
-# Story_Pad
+# StoryPad
+
+ Storypad is a Token Gated community of Readers and Writers where writers can share their stories, charge fees to give access to a digital copy, and give special access to readers having their NFT membership.
+ 
+ 
+
+![MicrosoftTeams-image (10)](https://user-images.githubusercontent.com/69969675/185176948-94696ba7-f5aa-468c-a2a3-8f1e81b71267.png)
+
 
 
 
