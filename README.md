@@ -20,6 +20,20 @@ Here writer can also choose to give a special discount or give free access to al
 ![MicrosoftTeams-image (12)](https://user-images.githubusercontent.com/69969675/185178623-10267567-342a-4f53-8d00-cd2b8be82a90.png)
 
 
+## Screen shots
+
+
+![MicrosoftTeams-image (11)](https://user-images.githubusercontent.com/69969675/185179850-57552f27-1552-408b-95a0-2eef897e0f8a.png)
+
+
+![MicrosoftTeams-image (15)](https://user-images.githubusercontent.com/69969675/185179875-79a458db-47bd-45a7-8fe8-a099d182992b.png)
+
+
+![Screenshot 2022-08-17 at 8 58 45 PM](https://user-images.githubusercontent.com/69969675/185180091-d0ef58eb-acb9-4e0c-b03e-8af970057ff4.png)
+
+
+
+
 
 ## NFT Readership
 
@@ -67,4 +81,32 @@ https://github.com/Disha1998/Story_Pad/blob/master/Filecoin.md
         return cid;
     }
 
+
 ```
+
+
+## Polygon
+
+
+https://github.com/Disha1998/Story_Pad/blob/master/Polygon.md
+
+```
+function createToken(string memory name, string memory symbol) public {
+        address _address = address(new mintContract(name, symbol)); // Created Token contract.
+         tokenNames[_address] = name;
+        emit TokenCreated(msg.sender, _address);
+    }
+    function bulkMintERC721(
+        address mintor,
+        address tokenAddress,
+        uint256 start,
+        uint256 end,
+        uint256 price
+    ) public {
+        for (uint256 i = start; i < end; i++) {
+            mintContract(tokenAddress).safeMint(mintor , price, tokenNames[tokenAddress]);
+        }
+    }
+
+```
+
