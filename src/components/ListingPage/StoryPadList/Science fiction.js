@@ -7,8 +7,9 @@ import { useMoralis } from "react-moralis";
 
 
 import { BookContext } from '../../../Context/BookContext'
+import ModalContribute from "../../Contribute/Contribute";
 
-function Historical() {
+function ScienceFiction() {
 
   const storyContext = React.useContext(BookContext);
   const { data } = storyContext;
@@ -52,7 +53,7 @@ function Historical() {
           <div className="card-columns">
             {
               storyData && storyData.map((e) => {
-                if (e.category == "Historical") {
+                if (e.category == "Science fiction") {
                   return (
                     <div className="card carding">
                       <a href="#">
@@ -64,9 +65,13 @@ function Historical() {
                           </p>
 
                           <p class="card-text"><small className="text-muted">Last updated {new Date().toLocaleString()}</small></p>
-                          <Link to={`/historical-detail/${e.id}`}>
-                            <button type="button" class="btn btn-outline-danger buy-story-btn">Buy Story</button>
 
+                            {/* <button type="button" class="btn btn-outline-danger buy-story-btn">Buy Story</button> */}
+                            <ModalContribute walletAddress={e.walletAddress}
+                            chargeble={e.chargeble}
+                            discount={e.discount} ></ModalContribute>
+                            
+                            <Link to={`/fantasy-detail/${e.id}`}> 
                             <Button variant="outline-info btn-outline-danger buy-story-btn">Read Full Story</Button>
                           </Link>
                         </div>
@@ -84,4 +89,4 @@ function Historical() {
 
   )
 }
-export default Historical;
+export default ScienceFiction;

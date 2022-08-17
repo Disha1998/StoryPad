@@ -1,4 +1,3 @@
-export const mintParentContract = '0xaD6e52F51091DF61fD352aDfC2CC202e0D34487B'; 
-
+export const mintParentContract = '0x55EC3cCbE5611Eae29f61d54A1a97E963D18c558'; 
 
 

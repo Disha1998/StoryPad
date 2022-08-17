@@ -61,10 +61,10 @@ function UploadForm() {
     //     setCoverPic(url);
     // }
 
-    async function coverEvent(e){
+    async function coverEvent(e) {
         const file = e.target.files[0];
-      var url = await storeFile(file);
-      setCoverPic(url);
+        var url = await storeFile(file);
+        setCoverPic(url);
     }
 
     const checkboxEvent = (e) => {
@@ -195,8 +195,11 @@ function UploadForm() {
 
                     <label><input className="terms-checkbox" value={checkbox} onChange={checkboxEvent} type="checkbox"></input>I agree to terms and conditions.</label>
 
-
-                    <label><span> </span><input type="submit" value="Publish" /></label>
+                    <button className="btn" type="submit" style={{
+                        backgroundColor: '#D82148', color: 'white',
+                        fontWeight: '30px', borderRadius: '7%', marginLeft: "137px", padding: "auto"
+                    }}>Publish</button>
+                    {/* <label><span> </span><input type="submit" value="Publish" style={{ backgroundColor: "green !important" }} /></label> */}
                 </form>
             </div>
         </div>

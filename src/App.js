@@ -16,18 +16,19 @@ import NewsDetail from './components/DetailsPage/NewsDetail';
 import WebsiteDetail from './components/DetailsPage/WebsiteDetail';
 import Profile from './components/Profile/Profile';
 import UploadFormNft from './components/UploadFormNft';
+//Listing
 import StoryList from './components/ListingPage/StoryList'
-import Fantasy from './components/ListingPage/StoryPadList/ Fantasy';
-import Historical from './components/ListingPage/StoryPadList/ Historical'
-import Horror from './components/ListingPage/StoryPadList/ Horror'
-import Mystery from './components/ListingPage/StoryPadList/ Mystery'
-import NewAdult from './components/ListingPage/StoryPadList/ New adult'
-import Paranormal from './components/ListingPage/StoryPadList/ Paranormal'
-import Romance from './components/ListingPage/StoryPadList/ Romance'
-import ScienceFiction from './components/ListingPage/StoryPadList/ Science fiction'
-import Sequels from './components/ListingPage/StoryPadList/ Sequels'
-import WildCard from './components/ListingPage/StoryPadList/ Wild card'
-import YoungAdult from './components/ListingPage/StoryPadList/ Young adult'
+import Fantasy from './components/ListingPage/StoryPadList/Fantasy';
+import Historical from './components/ListingPage/StoryPadList/Historical'
+import Horror from './components/ListingPage/StoryPadList/Horror'
+import Mystery from './components/ListingPage/StoryPadList/Mystery'
+import NewAdult from './components/ListingPage/StoryPadList/New adult'
+import Paranormal from './components/ListingPage/StoryPadList/Paranormal'
+import Romance from './components/ListingPage/StoryPadList/Romance'
+import ScienceFiction from './components/ListingPage/StoryPadList/Science fiction'
+import Sequels from './components/ListingPage/StoryPadList/Sequels'
+import WildCard from './components/ListingPage/StoryPadList/Wild card'
+import YoungAdult from './components/ListingPage/StoryPadList/Young adult'
 import Fanfiction from './components/ListingPage/StoryPadList/Fanfiction'
 // Detail Page
 import StoryDetail from './components/DetailsPage/StoryDetail'

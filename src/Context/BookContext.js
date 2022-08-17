@@ -62,77 +62,78 @@ export const BookContextProvider = (props) => {
             await authenticate({
                 provider: "web3Auth",
                 clientId: "BHQlt53J8Q_CprFI9tgx5aRB7pE9Ei0ccchzXQBNIYAI4RwdZ84Y2sVGoezEZ3S_kwwt3MuZ2eZIGoTYET--4I0",
+                
             })
                 .then(function (user) {
-                    let address = user.get("ethAddress")
-                    console.log(address, 'address in context');
-                    localStorage.setItem("currentUserAddress", address)
-                })
-                .catch(function (error) {
-                });
+                let address = user.get("ethAddress")
+                console.log(address, 'address in context');
+                localStorage.setItem("currentUserAddress", address)
+            })
+    .catch(function (error) {
+    });
 
         }
     }
 
 
 
-    async function getStoryDetails(params) {
-        console.log("params----------", params);
+async function getStoryDetails(params) {
+    console.log("params----------", params);
 
-        if (isAuthenticated) {
-            const archives = Moralis.Object.extend("Storylab");
-            const query = new Moralis.Query(archives);
-            query.equalTo("objectId", (params.id).toString());
-            const object = await query.first();
-            axios.get(`https://dweb.link/ipfs/${object.attributes.CID}/story.json`)
-                .then(function (response) {
-                    setStoryDetails(response.data)
-                })
-                .catch(function (error) {
-                   
-                })
-        }
+    if (isAuthenticated) {
+        const archives = Moralis.Object.extend("Storylab");
+        const query = new Moralis.Query(archives);
+        query.equalTo("objectId", (params.id).toString());
+        const object = await query.first();
+        axios.get(`https://dweb.link/ipfs/${object.attributes.CID}/story.json`)
+            .then(function (response) {
+                setStoryDetails(response.data)
+            })
+            .catch(function (error) {
+
+            })
     }
+}
 
-    console.log('storyDetails contexxx', storyDetails);
-
-
-    // ------------MAHIMA'CODE
-
-    async function storeFile(file) {
-        const ext = file.name.split('.').pop();
-
-        const fileName = `${uuidv4()}.${ext}`;
-        const newFile = new File([file], fileName, { type: file.type });
-        const cid = await client.put([newFile], {
-            name: fileName,
-        });
-        const imageURI = `https://${cid}.ipfs.dweb.link/${fileName}`;
-        setImage(imageURI);
-
-        return imageURI;
-    }
+console.log('storyDetails contexxx', storyDetails);
 
 
+// ------------MAHIMA'CODE
 
-    return (
-        <BookContext.Provider
-            value={{
-                addData,
-                storeFiles,
-                getStoryDetails,
-                data,
-                storyDetails,
-                login,
-                storeFile,
-                Image,
-                fetch
+async function storeFile(file) {
+    const ext = file.name.split('.').pop();
+
+    const fileName = `${uuidv4()}.${ext}`;
+    const newFile = new File([file], fileName, { type: file.type });
+    const cid = await client.put([newFile], {
+        name: fileName,
+    });
+    const imageURI = `https://${cid}.ipfs.dweb.link/${fileName}`;
+    setImage(imageURI);
+
+    return imageURI;
+}
 
 
 
-            }}
-        >
-            {props.children}
-        </BookContext.Provider>
-    );
+return (
+    <BookContext.Provider
+        value={{
+            addData,
+            storeFiles,
+            getStoryDetails,
+            data,
+            storyDetails,
+            login,
+            storeFile,
+            Image,
+            fetch
+
+
+
+        }}
+    >
+        {props.children}
+    </BookContext.Provider>
+);
 }

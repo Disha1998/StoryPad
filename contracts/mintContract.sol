@@ -1,44 +1,46 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-// import "./comman/ERC721.sol";
-
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-
-contract mintContract is  ERC721URIStorage{
+contract mintContract is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
+    uint256 public feePercent; //the fee percntage on sales
+    address payable public feeAccount;
     mapping(uint256 => MarketItem) public marketItems;
 
-  
-   struct MarketItem {
+    struct MarketItem {
         address nftContract;
         uint256 tokenId;
         address payable seller;
         address payable owner;
         uint256 price;
-
+        bool sold;
     }
 
-
-     event MarketItemCreated(
+    event MarketItemCreated(
         address indexed nftContract,
         uint256 indexed tokenId,
         address seller,
         address owner,
         uint256 price
-
+    );
+    event Bought(
+        address indexed nft,
+        uint256 tokenId,
+        uint256 price,
+        address indexed seller,
+        address indexed buyer
     );
 
     constructor(string memory _name, string memory _symbol)
         ERC721(_name, _symbol)
     {}
 
- 
     function toString(uint256 value) internal pure returns (string memory) {
         if (value == 0) {
             return "0";
@@ -57,45 +59,91 @@ contract mintContract is  ERC721URIStorage{
         }
         return string(buffer);
     }
-    function safeMint(address to, uint256 price, string memory name) public {
 
+    function safeMint(
+        address to,
+        uint256 price,
+        string memory name
+    ) public {
         uint256 tokenId = _tokenIdCounter.current();
         _safeMint(to, tokenId);
 
-
-          string[6] memory parts;
-        parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>.base { fill: black; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="white" /><text x="10" y="20" class="base">';
+        string[6] memory parts;
+        parts[
+            0
+        ] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>.base { fill: black; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="white" /><text x="10" y="20" class="base">';
         parts[1] = '</text><text x="10" y="40" class="base">';
-         parts[2] = toString(tokenId);
-         parts[3] = ' #';
-         parts[4] = name;
-         parts[5] = '</text></svg>';
-        string memory output = string(abi.encodePacked(parts[0],parts[1], parts[2], parts[3], parts[4], parts[5]));
-            output = string(abi.encodePacked(output));
+        parts[2] = toString(tokenId);
+        parts[3] = " #";
+        parts[4] = name;
+        parts[5] = "</text></svg>";
+        string memory output = string(
+            abi.encodePacked(
+                parts[0],
+                parts[1],
+                parts[2],
+                parts[3],
+                parts[4],
+                parts[5]
+            )
+        );
+        output = string(abi.encodePacked(output));
 
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "StoryPad #', toString(tokenId), '", "description": "This is author nft from storypad", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
-        output = string(abi.encodePacked('data:application/json;base64,', json));
-        _setTokenURI(tokenId, output); 
-      
-         marketItems[tokenId] = MarketItem(
+        string memory json = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        '{"name": "StoryPad #',
+                        toString(tokenId),
+                        '", "description": "This is author nft from storypad", "image": "data:image/svg+xml;base64,',
+                        Base64.encode(bytes(output)),
+                        '"}'
+                    )
+                )
+            )
+        );
+        output = string(
+            abi.encodePacked("data:application/json;base64,", json)
+        );
+        _setTokenURI(tokenId, output);
+        _tokenIdCounter.increment();
+        marketItems[tokenId] = MarketItem(
             address(this),
             tokenId,
             payable(to),
             payable(address(0)),
-            price
+            price,
+            false
         );
-        emit MarketItemCreated(
-            address(this),
-            tokenId,
-            to,
-            address(0),
-            price
-        );
-        _tokenIdCounter.increment(); 
+        emit MarketItemCreated(address(this), tokenId, to, address(0), price);
+        _tokenIdCounter.increment();
     }
 
+    function setTokenURI(uint256 tokenId, string memory tokenURI) public {
+        _setTokenURI(tokenId, tokenURI);
+    }
 
-    
+    //   function safeMint(address to, uint256 price) public  returns(uint256 tokenId){
+    //         uint256 tokenId = _tokenIdCounter.current();
+    //         _safeMint(to, tokenId);
+    //         marketItems[tokenId] = MarketItem(
+    // address(this),
+    // tokenId,
+    // payable(to),
+    // payable(address(0)),
+    // price,
+    // false
+    // );
+    // emit MarketItemCreated(
+    // address(this),
+    // tokenId,
+    // to,
+    // address(0),
+    // price
+    // );
+    //         _tokenIdCounter.increment();
+    //         return tokenId;
+    //     }
     function transferTokens(
         address from,
         address payable to,
@@ -108,9 +156,44 @@ contract mintContract is  ERC721URIStorage{
             require(to.send(amount), "Transfer of ETH to receiver failed");
         }
     }
+
+    function purchaseItem(
+        uint256 tokenId,
+        address to,
+        uint256 price,
+        address tokenAddress
+    ) external payable {
+        uint256 _totalPrice = getTotalPrice(tokenId);
+        //pay seller and feeAccount
+        // MarketItem storage item = marketItems[];
+        MarketItem memory item = marketItems[tokenId];
+        require(
+            msg.value >= _totalPrice,
+            "not enough ether to cover item price and market fee"
+        );
+        require(!item.sold, "item already sold");
+
+        item.seller.transfer(item.price);
+        feeAccount.transfer(_totalPrice - item.price);
+        item.sold = true;
+        IERC721(tokenAddress).transferFrom(
+            address(this),
+            msg.sender,
+            item.tokenId
+        );
+
+        emit Bought(address(this), tokenId, price, to, msg.sender);
+    }
+
+    function getTotalPrice(uint256 tokenId) public view returns (uint256) {
+        return ((marketItems[tokenId].price * (100 + feePercent)) / 100);
+    }
 }
-    library Base64 {
-    bytes internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+//library base64
+library Base64 {
+    bytes internal constant TABLE =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     /// @notice Encodes some bytes to the base64 representation
     function encode(bytes memory data) internal pure returns (string memory) {
@@ -139,11 +222,20 @@ contract mintContract is  ERC721URIStorage{
 
                 let out := mload(add(tablePtr, and(shr(18, input), 0x3F)))
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(shr(12, input), 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(shr(12, input), 0x3F))), 0xFF)
+                )
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(shr(6, input), 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(shr(6, input), 0x3F))), 0xFF)
+                )
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(input, 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(input, 0x3F))), 0xFF)
+                )
                 out := shl(224, out)
 
                 mstore(resultPtr, out)
@@ -165,4 +257,3 @@ contract mintContract is  ERC721URIStorage{
         return string(result);
     }
 }
-

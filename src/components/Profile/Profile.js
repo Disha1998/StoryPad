@@ -16,6 +16,8 @@ function Profile() {
     const { data } = storyContext;
 
     console.log('data==', data);
+    console.log(localStorage.getItem('currentUserAddress'));
+
 
 
     useEffect(() => {
@@ -77,28 +79,31 @@ function Profile() {
             </div>
             {
                 storyData && storyData.map((sData) => {
-                    return (
-                        <div className="card mb-3 offset-4 cardSec" style={{ maxWidth: "540px", marginTop: "55px", marginBottom: "5rem" }}>
-                            <div className="row no-gutters">
-                                <div className="col-md-12 mt-2 mb-2 panel-title">
-                                    {/* <div className="">Story by : {user && truncate(user.attributes.ethAddress)}</div> */}
-                                    <div className="">Story by : {sData.authorName}</div>
-                                </div>
-                                <div className="col-md-4 works-image">
-                                    <img className="card-img" src={sData.coverPicture}></img>
-                                </div>
-                                <div className="col-md-8">
-                                    <div className="card-body">
-                                        <p className="card-heading">{sData.name}</p>
-                                        <div className="offset-4 col-4"><Chip label={sData.category} component="a" href="#chip" /></div>
-                                        <p className="card-text mt-3">{sData.description}</p>
-                                        <p class="card-text"><small className="text-muted">Last updated {new Date().toLocaleString()}</small></p>
-
+                    if(sData.walletAddress == localStorage.getItem('currentUserAddress')){
+                        return (
+                            <div className="card mb-3 offset-4 cardSec" style={{ maxWidth: "540px", marginTop: "55px", marginBottom: "5rem" }}>
+                                <div className="row no-gutters">
+                                    <div className="col-md-12 mt-2 mb-2 panel-title">
+                                        {/* <div className="">Story by : {user && truncate(user.attributes.ethAddress)}</div> */}
+                                        <div className="">Story by : {sData.authorName}</div>
+                                    </div>
+                                    <div className="col-md-4 works-image">
+                                        <img className="card-img" src={sData.coverPicture}></img>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body">
+                                            <p className="card-heading">{sData.name}</p>
+                                            <div className="offset-4 col-4"><Chip label={sData.category} component="a" href="#chip" /></div>
+                                            <p className="card-text mt-3">{sData.description}</p>
+                                            <p class="card-text"><small className="text-muted">Last updated {new Date().toLocaleString()}</small></p>
+    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )
+                        )
+                    }
+                   
                 })
 
             }

@@ -11,7 +11,7 @@ function Header() {
 
   const { login } = bookContext;
 
-  const { Moralis, isAuthenticated } = useMoralis();
+  const { Moralis, isAuthenticated,user } = useMoralis();
 
   return (
     <AppBar color="inherit" position="fixed" sx={{ height: "70px" }}>
@@ -36,6 +36,12 @@ function Header() {
               backgroundColor: '#D82148', color: 'white',
               fontWeight: '30px', borderRadius: '7%', padding: "auto", marginLeft: '10px',
 
+            }}>Add NFT Readership</button>
+          </Link>
+          <Link to="readership-nft">
+            <button className="btn" style={{
+              backgroundColor: '#D82148', color: 'white',
+              fontWeight: '30px', borderRadius: '7%', marginLeft: "7px", padding: "auto"
             }}>NFT Readership</button>
           </Link>
 
@@ -46,7 +52,9 @@ function Header() {
             border: '2px solid #D82148',
             marginLeft: '10px',
             borderRadius: '7%',
-            padding: "auto"
+            padding: "auto",
+            // navigate("/dashboard");
+
           }}>{isAuthenticated ? "Connected" : "Connect"}</button>
 
           <Link to="profile">

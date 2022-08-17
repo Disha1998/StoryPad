@@ -9,7 +9,7 @@ import { useMoralis } from "react-moralis";
 import { BookContext } from '../../../Context/BookContext'
 import ModalContribute from "../../Contribute/Contribute";
 
-function Fanfiction() {
+function Fantasy() {
 
   const storyContext = React.useContext(BookContext);
   const { data } = storyContext;
@@ -53,7 +53,7 @@ function Fanfiction() {
           <div className="card-columns">
             {
               storyData && storyData.map((e) => {
-                if (e.category == "Fanfiction") {
+                if (e.category == "Fantasy") {
                   return (
                     <div className="card carding">
                       <a href="#">
@@ -89,4 +89,4 @@ function Fanfiction() {
 
   )
 }
-export default Fanfiction;
+export default Fantasy;

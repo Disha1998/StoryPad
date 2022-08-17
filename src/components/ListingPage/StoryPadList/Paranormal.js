@@ -7,8 +7,9 @@ import { useMoralis } from "react-moralis";
 
 
 import { BookContext } from '../../../Context/BookContext'
+import ModalContribute from "../../Contribute/Contribute";
 
-function Horror() {
+function Paranormal() {
 
   const storyContext = React.useContext(BookContext);
   const { data } = storyContext;
@@ -52,7 +53,7 @@ function Horror() {
           <div className="card-columns">
             {
               storyData && storyData.map((e) => {
-                if (e.category == "Horror") {
+                if (e.category == "Paranormal") {
                   return (
                     <div className="card carding">
                       <a href="#">
@@ -64,11 +65,15 @@ function Horror() {
                           </p>
 
                           <p class="card-text"><small className="text-muted">Last updated {new Date().toLocaleString()}</small></p>
-                          <Link to={`/horror-detail/${e.id}`}>
 
-                            <button type="button" class="btn btn-outline-danger buy-story-btn">Buy Story</button>
-
-                            <Button variant="outline-info btn-outline-danger buy-story-btn">Read Full Story</Button>                          </Link>
+                            {/* <button type="button" class="btn btn-outline-danger buy-story-btn">Buy Story</button> */}
+                            <ModalContribute walletAddress={e.walletAddress}
+                            chargeble={e.chargeble}
+                            discount={e.discount} ></ModalContribute>
+                            
+                            <Link to={`/fantasy-detail/${e.id}`}> 
+                            <Button variant="outline-info btn-outline-danger buy-story-btn">Read Full Story</Button>
+                          </Link>
                         </div>
                       </a>
                     </div>
@@ -84,4 +89,4 @@ function Horror() {
 
   )
 }
-export default Horror;
+export default Paranormal;
