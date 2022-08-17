@@ -20,6 +20,16 @@ Here writer can also choose to give a special discount or give free access to al
 ![MicrosoftTeams-image (12)](https://user-images.githubusercontent.com/69969675/185178623-10267567-342a-4f53-8d00-cd2b8be82a90.png)
 
 
+
+## NFT Readership
+
+NFT Readership is a kind of membership where only specific number of readers will get a chance to support the writer by purchasing NFT to be part of the Writer's Reader Club.
+
+![Screenshot 2022-08-17 at 8 56 17 PM](https://user-images.githubusercontent.com/69969675/185179514-0f260cbc-b274-4fb7-940b-7881b8252a82.png)
+
+
+
+
 ## Screen shots
 
 
@@ -30,19 +40,6 @@ Here writer can also choose to give a special discount or give free access to al
 
 
 ![Screenshot 2022-08-17 at 8 58 45 PM](https://user-images.githubusercontent.com/69969675/185180091-d0ef58eb-acb9-4e0c-b03e-8af970057ff4.png)
-
-
-
-
-
-## NFT Readership
-
-NFT Readership is a kind of membership where only specific number of readers will get a chance to support the writer by purchasing NFT to be part of the Writer's Reader Club.
-
-![Screenshot 2022-08-17 at 8 56 17 PM](https://user-images.githubusercontent.com/69969675/185179514-0f260cbc-b274-4fb7-940b-7881b8252a82.png)
-
-
-
 
 
 
