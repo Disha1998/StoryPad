@@ -17,7 +17,7 @@ Here writer can also choose to give a special discount or give free access to al
 ![MicrosoftTeams-image (13)](https://user-images.githubusercontent.com/69969675/185178807-3678781a-0cde-4b25-a38f-a981eefa2ec8.png)
 
 
-![MicrosoftTeams-image (12)](https://user-images.githubusercontent.com/69969675/185178623-10267567-342a-4f53-8d00-cd2b8be82a90.png)
+![Screenshot 2022-08-18 at 10 34 59 AM](https://user-images.githubusercontent.com/69969675/185301178-f2e551f8-948b-4079-95ee-10ad92165bc8.png)
 
 
 
